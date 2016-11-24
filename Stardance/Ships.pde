@@ -7,7 +7,7 @@ class Ships {
   
   ArrayList<Blocks> blocks;
   
-  Ship(int absX, int absY) {
+  Ships(int absX, int absY) {
     location = new PVector(absX, absY);
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
@@ -18,5 +18,9 @@ class Ships {
   
   void run() {
     
+  }
+  
+  void addBlock(int x, int y, color bl) {
+    blocks.add(new Blocks(new PVector(x, y), bl));
   }
 }

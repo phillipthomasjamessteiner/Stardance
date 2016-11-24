@@ -1,13 +1,13 @@
 
 class Stars {
-  int starX, starY;
+  float starX, starY;
   
-  Stars(int sX, int sY) {
+  Stars(float sX, float sY) {
     starX = sX;
     starY = sY;
   }
   
-  void run(int velX, int velY) {
+  void run(float velX, float velY) {
     starX += velX;
     starY += velY;
     

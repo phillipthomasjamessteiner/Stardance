@@ -3,7 +3,15 @@ PFont Calibri;
 int mouseScroll;
 
 Starfield starf;
-int ScreenState = 0;
+int ScreenState = 0; 
+
+// Main Physics Vectors
+
+PVector CharacterABSLocation;
+PVector CharacterVelocity;
+PVector CharacterAcceleration;
+boolean inShip = false;
+float astronautVel = 1;
 
 // Start Screen
 Button StartButton;
@@ -14,6 +22,13 @@ Button OptionButton;
 void setup() {
   size(1080, 720);
   rectMode(CORNER);
+  ellipseMode(CENTER);
+  
+  // PVector Initializations'
+  
+  CharacterABSLocation = new PVector(0, 0);
+  CharacterVelocity = new PVector(0, 0);
+  CharacterAcceleration = new PVector(0, 0);
   
   // Fonts
   DosVGAFont = loadFont("PerfectDOSVGA437-48.vlw");
@@ -29,6 +44,7 @@ void setup() {
 }
 
 void draw() {
+  
   switch(ScreenState) {
     case 0: //Start Menu
       starf.run(5, 6);
@@ -50,7 +66,9 @@ void draw() {
       // Start Menu
       break;
     case 1:
-      // Main Frame
+      calcLoc();
+      starf.run(-1 * CharacterVelocity.x, -1 * CharacterVelocity.y);
+      mainFrame();
       break;
     case 2:
       starf.run(5, 6);
@@ -63,8 +81,41 @@ void draw() {
   }
 }
 
+void calcLoc() {
+  float mxScale = ((float)mouseX - ((float)width/2))/( abs((float)mouseX-((float)width/2)) + abs((float)mouseY-((float)height/2)));
+  float myScale = ((float)mouseY - ((float)height/2))/( abs((float)mouseX-((float)width/2)) + abs((float)mouseY-((float)height/2)));
+  if (!inShip) {
+    if (keyPressed && key == CODED && keyCode == UP) {
+      CharacterVelocity.x = astronautVel * mxScale;
+      CharacterVelocity.y = astronautVel * myScale;
+    }
+    else if (keyPressed && key == CODED && keyCode == DOWN) {
+      CharacterVelocity.x = -1 * astronautVel * mxScale;
+      CharacterVelocity.y = -1 * astronautVel * myScale;
+    }
+    else {
+      CharacterVelocity.x = 0;
+      CharacterVelocity.y = 0;
+    }
+  }
+  else {
+    
+  }
+  CharacterABSLocation.x += CharacterVelocity.x;
+  CharacterABSLocation.y += CharacterVelocity.x;
+  println(CharacterABSLocation.x + " | " + CharacterABSLocation.y);
+}
+
+void mainFrame() {
+  if (!inShip) {
+    stroke(150);
+    strokeWeight(2);
+    fill(175);
+    ellipse(width/2, height/2, 8, 8);
+  }
+}
+
 void mouseWheel(MouseEvent event) {
   if (mouseScroll == 0 && event.getCount() < 0) {}
   else {mouseScroll += event.getCount();}
-  println(mouseScroll);
 }
