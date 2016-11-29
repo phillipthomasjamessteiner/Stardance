@@ -17,7 +17,9 @@ float astronautVel = 1;
 Button StartButton;
 Button OptionButton;
 
-//Ship Array Lists
+// Array Lists
+
+ArrayList<Ships> ships;
 
 void setup() {
   size(1080, 720);
@@ -29,6 +31,10 @@ void setup() {
   CharacterABSLocation = new PVector(0, 0);
   CharacterVelocity = new PVector(0, 0);
   CharacterAcceleration = new PVector(0, 0);
+  
+  // ArrayList Initializations
+  
+  ships = new ArrayList<Ships>();
   
   // Fonts
   DosVGAFont = loadFont("PerfectDOSVGA437-48.vlw");
