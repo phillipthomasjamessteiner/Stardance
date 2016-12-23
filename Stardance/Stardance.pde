@@ -1,5 +1,6 @@
 PFont DosVGAFont;
 PFont Calibri;
+int mouseScroll;
 
 Starfield starf;
 int ScreenState = 0;
@@ -7,6 +8,8 @@ int ScreenState = 0;
 // Start Screen
 Button StartButton;
 Button OptionButton;
+
+//Ship Array Lists
 
 void setup() {
   size(1080, 720);
@@ -58,4 +61,10 @@ void draw() {
       // Options Menu
       break;
   }
+}
+
+void mouseWheel(MouseEvent event) {
+  if (mouseScroll == 0 && event.getCount() < 0) {}
+  else {mouseScroll += event.getCount();}
+  println(mouseScroll);
 }
